@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <title>jib spec</title>
+  </head>
+  <body>
+    <div class="upload-container">
+      <h1>Upload an Image</h1>
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="image">Select an image:</label>
+        <input type="file" name="image" id="image" accept="image/*" required />
+        <br />
+        <button type="submit">Upload</button>
+      </form>
+    </div>
+
+    <div class="container">
+      <div class="products-container" id="products-container">
+        <div class="products-item">
+          <div class="product-img">
+            <img src="https://picsum.photos/200" alt="" />
+          </div>
+          <div class="product-description">firstName</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
