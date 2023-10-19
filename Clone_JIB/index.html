@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="CSS/style.css" />
     <script src="script.js"></script>
     <title>jib spec</title>
   </head>
   <body>
-    <div class="upload-container">
+    <!-- <div class="upload-container">
       <h1>Upload an Image</h1>
       <form action="/upload" method="POST" enctype="multipart/form-data">
         <label for="image">Select an image:</label>
@@ -19,105 +19,223 @@
       <br />
       <button id="getData">Get API Data</button>
       <div id="result"></div>
+    </div> -->
+
+    <div class="navbar"><a href="#">PC Customizer</a></div>
+
+    <div class="filter-container">
+      <div class="block-1"><p>Price : 120,000 บาท</p></div>
+      <div class="block-2">
+        <div class="filter">
+          <label for="brand-cpu">Brand</label>
+          <select id="brand-cpu">
+            <option value="Select">Select</option>
+            <option value="Intel">Intel</option>
+            <option value="AMD">AMD</option>
+          </select>
+        </div>
+        <div class="filter">
+          <label for="model-cpu">Model</label>
+          <select id="model-cpu">
+            <option value="Select">Select</option>
+            <option value="i3">Core i3</option>
+            <option value="i5">Core i5</option>
+            <option value="i7">Core i7</option>
+            <option value="i9">Core i9</option>
+            <option value="r3">Ryzen 3</option>
+            <option value="r5">Ryzen 5</option>
+            <option value="r7">Ryzen 7</option>
+            <option value="r9">Ryzen 9</option>
+          </select>
+        </div>
+        <div class="filter">
+          <label for="socket-cpu">Socket</label>
+          <select id="socket-cpu">
+            <option value="Select">Select</option>
+            <option value="LGA1200">LGA 1200</option>
+            <option value="LGA1700">LGA 1700</option>
+            <option value="AM4">AM4</option>
+            <option value="AM4">AM5</option>
+          </select>
+        </div>
+        <div class="filter">
+          <label for="brand-cpu">Search</label>
+          <div class="search">
+            <input id="search" type="search" placeholder="Search..." />
+            <button type="submit">Search</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="container">
+      <div class="selected-container">
+        <div class="menu-box"><a>CPU</a></div>
+        <div class="menu-box"><a>Mainboard</a></div>
+        <div class="menu-box"><a>VGA Card</a></div>
+        <div class="menu-box"><a>Memory</a></div>
+        <div class="menu-box"><a>Harddisk</a></div>
+        <div class="menu-box"><a>SSD Sata 2.5"</a></div>
+        <div class="menu-box"><a>SSD PCIE M.2</a></div>
+        <div class="menu-box"><a>Power Supply</a></div>
+        <div class="menu-box"><a>Air Cooler</a></div>
+        <div class="menu-box"><a>Liquid Cooler</a></div>
+        <div class="menu-box"><a>Case</a></div>
+      </div>
+
       <div class="products-container" id="products-container">
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/200" alt="" />
+            <img src="https://picsum.photos/200" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/201" alt="" />
+            <img src="https://picsum.photos/201" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/202" alt="" />
+            <img src="https://picsum.photos/202" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/203" alt="" />
+            <img src="https://picsum.photos/203" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/204" alt="" />
+            <img src="https://picsum.photos/204" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/205" alt="" />
+            <img src="https://picsum.photos/205" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/206" alt="" />
+            <img src="https://picsum.photos/206" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/207" alt="" />
+            <img src="https://picsum.photos/207" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/208" alt="" />
+            <img src="https://picsum.photos/208" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/209" alt="" />
+            <img src="https://picsum.photos/209" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/210" alt="" />
+            <img src="https://picsum.photos/210" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/211" alt="" />
+            <img src="https://picsum.photos/211" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/212" alt="" />
+            <img src="https://picsum.photos/212" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/213" alt="" />
+            <img src="https://picsum.photos/213" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/214" alt="" />
+            <img src="https://picsum.photos/214" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
         <div class="products-item">
           <div class="product-img">
-            <img src="https://picsum.photos/215" alt="" />
+            <img src="https://picsum.photos/215" alt="Loading..." />
           </div>
-          <div class="product-description">firstName</div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
+        </div>
+        <div class="products-item">
+          <div class="product-img">
+            <img src="https://picsum.photos/216" alt="Loading..." />
+          </div>
+          <div class="product-description">
+            <input type="button" value="Add to Spec" />
+            <input type="button" value="Detail" />
+          </div>
         </div>
       </div>
     </div>
