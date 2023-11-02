@@ -7,39 +7,47 @@
     <title>Login Management</title>
   </head>
   <body>
-    <form>
+    <form method="POST" id="loginForm">
       <div class="container">
         <div
-          class="row align-items-center bg-black justify-content-center"
+          class="row d-flex justify-content-center align-items-center"
           style="height: 100vh"
         >
-          <div class="col-sm-12 col-md-9 col-lg-6">
-            <div class="card px-5 py-3">
+          <div class="col-sm-12 col-md-9 col-lg-5">
+            <div class="card p-5 shadow">
               <h1 class="text-center">Login</h1>
               <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input
                   type="text"
                   class="form-control"
+                  name="username"
+                  id="username_login"
                   placeholder="Username"
+                  required
                 />
+                <div class="invalid-feedback" id="userFeedback">
+                  Username is invalid
+                </div>
               </div>
-              <div class="mb-3">
+              <div class="mb-4">
                 <label class="form-label">Password</label>
                 <input
                   type="password"
                   class="form-control"
+                  name="password"
+                  id="password_login"
                   placeholder="Password"
+                  required
                 />
-                <div class="invalid-feedback">Password is invalid</div>
+                <div class="invalid-feedback" id="passFeedback">
+                  Password is invalid
+                </div>
               </div>
-              <p class="form-text text-end">Forgot password?</p>
+              <!-- <a href="#" class="form-text text-end text-decoration-none">Forgot password?</p> -->
               <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Login</button>
               </div>
-              <p class="form-text text-center mt-3">
-                Don't have an account? <a href="#" class="link">Register</a>
-              </p>
             </div>
           </div>
         </div>
@@ -47,4 +55,5 @@
     </form>
   </body>
   <script src="../js/bootstrap.min.js"></script>
+  <script src="../api/login-register.js"></script>
 </html>

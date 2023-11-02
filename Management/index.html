@@ -4,10 +4,208 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <title>Management</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Back Office</title>
   </head>
   <body>
-    <h1>Management</h1>
+    <!-- <div
+      class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark position-fixed"
+      style="width: 280px; height: 100vh"
+    >
+      <a
+        href="#"
+        class="d-flex align-items-center text-white text-decoration-none"
+        ><span class="fs-4">PC Customizer</span></a
+      >
+      <hr />
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white active">
+            <i class="bx bxs-home me-2"></i>Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"
+            ><i class="bx bxs-user me-2"></i>Accounts
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"
+            ><i class="bx bxs-package me-2"></i>Products
+          </a>
+        </li>
+      </ul>
+
+      <hr />
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <img
+            src="https://picsum.photos/200"
+            class="rounded-circle me-2"
+            width="35"
+            height="35"
+          />
+          <a
+            href=""
+            class="text-decoration-none text-white fs-5"
+            id="showAccount"
+          ></a>
+        </div>
+        <button class="btn btn-outline-primary" id="logoutBtn">Logout</button>
+      </div>
+    </div> -->
+    <!-- Navbar -->
+    <div class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <div class="container">
+        <a href="#" class="navbar-brand">Navbar</a>
+        <button
+          class="navbar-toggler"
+          data-bs-toggle="collapse"
+          data-bs-target="#menu1"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu1">
+          <ul class="nav nav-underline me-auto">
+            <!-- <li class="nav-item ms-3">
+              <a href="#" class="nav-link text-white active">Home</a>
+            </li> -->
+            <li class="nav-item ms-3">
+              <a href="#" class="nav-link text-white active" id="accountTab"
+                >Accounts</a
+              >
+            </li>
+            <li class="nav-item ms-3">
+              <a href="#" class="nav-link text-white" id="productTab"
+                >Products</a
+              >
+            </li>
+          </ul>
+          <a
+            href=""
+            class="navbar-text text-decoration-none me-3"
+            id="showAccount"
+          >
+          </a>
+          <button class="btn btn-outline-primary" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accounts Content -->
+    <div class="container mt-2 pt-3 card" id="accountsContent">
+      <div class="row">
+        <div class="col-12 d-flex">
+          <button class="btn btn-success ms-auto">Add User</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle caption-top">
+              <caption>
+                List of users
+              </caption>
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col" style="width: 2%" class="text-center">
+                    <input type="checkbox" />
+                  </th>
+                  <th scope="col" style="width: 20%">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col" style="width: 10%">Role</th>
+                  <th scope="col" style="width: 20%">Created_at</th>
+                  <th scope="col" style="width: 20%">Updated_at</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider" id="table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Content -->
+    <div
+      class="container mt-2 pt-3 card"
+      id="productsContent"
+      style="display: none"
+    >
+      <div class="row">
+        <div class="col-12 d-flex">
+          <button class="btn btn-success ms-auto">Add Product</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle caption-top">
+              <caption>
+                List of products
+              </caption>
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col" style="width: 2%" class="text-center">
+                    <input type="checkbox" />
+                  </th>
+                  <th scope="col" style="width: 25%">Username</th>
+                  <th scope="col" style="width: 25%">Role</th>
+                </tr>
+              </thead>
+              <tbody class="table-group-divider" id="table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script src="../js/bootstrap.min.js"></script>
+  <script src="../api/managementAPI.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const navLink = document.querySelectorAll(".nav-link");
+      function activeLink() {
+        if (navLink) {
+          navLink.forEach((link) => {
+            link.classList.remove("active");
+          });
+          this.classList.add("active");
+        }
+      }
+      navLink.forEach((link) => {
+        link.addEventListener("click", activeLink);
+      });
+      // Logout
+      const logout = document.getElementById("logoutBtn");
+      logout.addEventListener("click", () => {
+        localStorage.removeItem("token");
+        window.location.href = "/Management/login.html";
+      });
+
+      // Check JWT account
+      const userAcc = document.getElementById("showAccount");
+      const token = localStorage.getItem("token");
+      fetch("http://localhost:5000/api/auth/authenticate", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("API request failed");
+          }
+        })
+        .then((data) => {
+          if (data.status == "ok") {
+            userAcc.textContent = data.message.username;
+          }
+        });
+    });
+  </script>
 </html>
