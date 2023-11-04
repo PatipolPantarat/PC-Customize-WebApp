@@ -26,8 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "/Management/index.html";
             userValidate.classList.remove("is-invalid");
             passValidate.classList.remove("is-invalid");
-          } else if (data.status == "user_error") {
+          } else if (
+            data.status == "user_error" ||
+            data.status == "user_not_found"
+          ) {
             userValidate.classList.add("is-invalid");
+            alert("status : error\nmessage : " + data.message);
           } else if (data.status == "password_error") {
             userValidate.classList.remove("is-invalid");
             passValidate.classList.add("is-invalid");

@@ -58,4 +58,24 @@ document.addEventListener("DOMContentLoaded", () => {
   userInterface.addEventListener("click", () => {
     window.location.href = "index.html";
   });
+
+  // Navbar
+  const navLink = document.querySelectorAll(".nav-link");
+  function activeLink() {
+    if (navLink) {
+      navLink.forEach((link) => {
+        link.classList.remove("active");
+      });
+      navLink.classList.add("active");
+    }
+  }
+  navLink.forEach((link) => {
+    link.addEventListener("click", activeLink);
+  });
+  // Logout
+  const logout = document.getElementById("logoutBtn");
+  logout.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "/Management/login.html";
+  });
 });
