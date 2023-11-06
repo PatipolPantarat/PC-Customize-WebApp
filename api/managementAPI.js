@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
   // Render table function
   const renderTable = (data) => {
-    console.log(isUserLogin);
+    // console.log(isUserLogin);
     let rows = 1;
     let itemsHTML = "";
     data.forEach((item) => {
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         userIDs.push(item.id);
       }
     });
-    document.getElementById("table-body").innerHTML = itemsHTML;
+    document.getElementById("table-body-accounts").innerHTML = itemsHTML;
   };
 
   // Check JWT account
@@ -111,13 +111,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         link.classList.add("active");
       }
     });
-  });
-
-  // Logout
-  const logout = document.getElementById("logoutBtn");
-  logout.addEventListener("click", () => {
-    localStorage.removeItem("token");
-    window.location.href = "/Management/login.html";
   });
 
   // Edit this account

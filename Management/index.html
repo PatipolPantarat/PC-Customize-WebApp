@@ -8,7 +8,7 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <title>Back Office</title>
+    <title>Management</title>
   </head>
   <body>
     <!-- Navbar -->
@@ -119,7 +119,10 @@
                   </th>
                 </tr>
               </thead>
-              <tbody class="table-group-divider" id="table-body"></tbody>
+              <tbody
+                class="table-group-divider"
+                id="table-body-accounts"
+              ></tbody>
             </table>
           </div>
         </div>
@@ -134,8 +137,24 @@
     >
       <div class="row">
         <div class="col-12 d-flex">
-          <button class="btn btn-outline-danger me-auto">Del Product</button>
-          <button class="btn btn-success ms-auto">Add Product</button>
+          <button class="btn btn-outline-danger me-auto" id="delProduct">
+            Del Product
+          </button>
+          <div>
+            <input
+              class="form-control"
+              type="search"
+              placeholder="Search"
+              id="searchInput"
+            />
+          </div>
+          <button
+            class="btn btn-success ms-auto"
+            data-bs-toggle="modal"
+            data-bs-target="#addProductModal"
+          >
+            Add Product
+          </button>
         </div>
       </div>
       <div class="row">
@@ -148,13 +167,48 @@
               <thead class="table-dark">
                 <tr>
                   <th scope="col" style="width: 3%" class="text-center">
-                    <input type="checkbox" />
+                    <input type="checkbox" class="form-check-input" disabled />
                   </th>
-                  <th scope="col" style="width: 25%">Username</th>
-                  <th scope="col" style="width: 25%">Role</th>
+                  <th scope="col" style="width: 4%" class="text-center">#</th>
+                  <th scope="col" style="width: 15%">
+                    <i
+                      class="bx bxs-down-arrow mx-2"
+                      style="color: white"
+                      id="sortBtnUsername"
+                    ></i>
+                    Name
+                  </th>
+                  <th scope="col">
+                    <i
+                      class="bx bxs-down-arrow mx-2"
+                      style="color: white"
+                      id="sortBtnEmail"
+                    ></i
+                    >Title_Image_Url
+                  </th>
+                  <th scope="col" style="width: 10%">Price</th>
+                  <th scope="col" style="width: 20%">
+                    <i
+                      class="bx bxs-down-arrow mx-2"
+                      style="color: white"
+                      id="sortBtnCreate"
+                    ></i
+                    >Created_at
+                  </th>
+                  <th scope="col" style="width: 20%">
+                    <i
+                      class="bx bxs-down-arrow mx-2"
+                      style="color: white"
+                      id="sortBtnUpdate"
+                    ></i
+                    >Updated_at
+                  </th>
                 </tr>
               </thead>
-              <tbody class="table-group-divider" id="table-body"></tbody>
+              <tbody
+                class="table-group-divider"
+                id="table-body-products"
+              ></tbody>
             </table>
           </div>
         </div>
@@ -275,7 +329,109 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal Add Products Content -->
+    <div class="modal fade" id="addProductModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Product</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="addProductForm"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select name="category" class="form-select" id="category">
+                  <option value="select">Select</option>
+                  <option value="cpu">CPU</option>
+                  <option value="mainboard">Mainboard</option>
+                  <option value="graphics_card">Graphics Card</option>
+                  <option value="memory">Memory</option>
+                  <option value="harddisk">Harddisk</option>
+                  <option value="ssd_sata">SSD Sata 2.5"</option>
+                  <option value="ssd_pcie">SSD PCIE M.2"</option>
+                  <option value="power_supply">Power Supply</option>
+                  <option value="cpu_cooler">CPU Cooler</option>
+                  <option value="case">Case</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="brand" class="form-label">Brand</label>
+                <select name="brand" class="form-select" id="brand">
+                  <option value="select">Select</option>
+                  <option value="intel" data-filter="cpu">Intel</option>
+                  <option value="amd" data-filter="cpu">AMD</option>
+                  <option value="asrock" data-filter="mainboard">Asrock</option>
+                  <option value="asus" data-filter="mainboard">Asus</option>
+                  <option value="gigabyte" data-filter="mainboard">
+                    Gigabyte
+                  </option>
+                  <option value="msi" data-filter="mainboard">MSI</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Name"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="title_image" class="form-label">Title image</label>
+                <input
+                  type="file"
+                  name="title_image"
+                  class="form-control"
+                  id="title_image"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="detial_images" class="form-label"
+                  >Detail image (Multiple images)</label
+                >
+                <input
+                  type="file"
+                  name="detail_images"
+                  class="form-control"
+                  id="detail_images"
+                  multiple
+                />
+              </div>
+              <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" placeholder="Price" />
+              </div>
+              <div class="mb-3">
+                <label for="detail" class="form-label">Detail</label>
+                <textarea
+                  type="text"
+                  name="detail"
+                  class="form-control"
+                  placeholder="Detail"
+                ></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-success">Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
   <script src="../js/bootstrap.min.js"></script>
   <script src="../api/managementAPI.js"></script>
+  <script src="../api/productsAPI.js"></script>
+  <script src="../api/productsScript.js"></script>
 </html>
