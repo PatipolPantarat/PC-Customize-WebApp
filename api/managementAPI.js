@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
   // Render table function
   const renderTable = (data) => {
-    // console.log(isUserLogin);
     let rows = 1;
     let itemsHTML = "";
     data.forEach((item) => {
@@ -45,8 +44,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
     const data = await response.json();
     if (data.status == "ok") {
-      userAcc.textContent = data.message.username;
-      isUserLogin = data.message.username;
+      userAcc.textContent = data.message;
+      isUserLogin = data.message;
     } else {
       localStorage.removeItem("token");
       window.location.href = "/Management/login.html";
@@ -158,6 +157,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  // Close modal
+  const addAccountModal = new bootstrap.Modal(
+    document.getElementById("addAccountModal")
+  );
   // Add Account
   const addAccountForm = document.getElementById("addAccountForm");
   addAccountForm.addEventListener("submit", async (e) => {
@@ -166,10 +169,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const account_type = document.getElementById("account_type").value;
-    // Close modal
-    const addAccountModal = new bootstrap.Modal(
-      document.getElementById("addAccountModal")
-    );
 
     try {
       const response = await fetch(baseURL + "api/auth/add_account", {

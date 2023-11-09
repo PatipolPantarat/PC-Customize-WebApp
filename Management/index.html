@@ -140,21 +140,48 @@
           <button class="btn btn-outline-danger me-auto" id="delProduct">
             Del Product
           </button>
-          <div>
-            <input
-              class="form-control"
-              type="search"
-              placeholder="Search"
-              id="searchInput"
-            />
-          </div>
+
           <button
             class="btn btn-success ms-auto"
             data-bs-toggle="modal"
             data-bs-target="#addProductModal"
+            id="addProductBtn"
           >
             Add Product
           </button>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-12 d-flex justify-content-evenly">
+          <div>
+            <label for="filterCategory" class="form-label">Category</label>
+            <select
+              name="category"
+              class="form-select"
+              id="filterCategory"
+              style="width: 200px"
+            ></select>
+          </div>
+
+          <div>
+            <label for="filterBrand" class="form-label">Brand</label>
+            <select
+              name="brand"
+              class="form-select"
+              id="filterBrand"
+              style="width: 200px"
+            ></select>
+          </div>
+          <div>
+            <label for="searchInputProduct" class="form-label">Search</label>
+            <input
+              class="form-control"
+              type="search"
+              placeholder="Search"
+              id="searchInputProduct"
+            />
+          </div>
         </div>
       </div>
       <div class="row">
@@ -166,42 +193,23 @@
               </caption>
               <thead class="table-dark">
                 <tr>
-                  <th scope="col" style="width: 3%" class="text-center">
+                  <th scope="col" class="text-center" style="width: 3%">
                     <input type="checkbox" class="form-check-input" disabled />
                   </th>
-                  <th scope="col" style="width: 4%" class="text-center">#</th>
-                  <th scope="col" style="width: 15%">
+                  <th scope="col" class="text-center" style="width: 3%">#</th>
+                  <th scope="col" style="width: 10%">Category</th>
+                  <th scope="col" style="width: 10%">Brand</th>
+                  <th scope="col" style="width: 20%">Name</th>
+                  <th scope="col" style="width: 5%">
                     <i
                       class="bx bxs-down-arrow mx-2"
                       style="color: white"
                       id="sortBtnUsername"
-                    ></i>
-                    Name
-                  </th>
-                  <th scope="col">
-                    <i
-                      class="bx bxs-down-arrow mx-2"
-                      style="color: white"
-                      id="sortBtnEmail"
                     ></i
-                    >Title_Image_Url
+                    >Price
                   </th>
-                  <th scope="col" style="width: 10%">Price</th>
-                  <th scope="col" style="width: 20%">
-                    <i
-                      class="bx bxs-down-arrow mx-2"
-                      style="color: white"
-                      id="sortBtnCreate"
-                    ></i
-                    >Created_at
-                  </th>
-                  <th scope="col" style="width: 20%">
-                    <i
-                      class="bx bxs-down-arrow mx-2"
-                      style="color: white"
-                      id="sortBtnUpdate"
-                    ></i
-                    >Updated_at
+                  <th scope="col" class="text-center" style="width: 3%">
+                    Action
                   </th>
                 </tr>
               </thead>
@@ -350,33 +358,19 @@
             >
               <div class="mb-3">
                 <label for="category" class="form-label">Category</label>
-                <select name="category" class="form-select" id="category">
-                  <option value="select">Select</option>
-                  <option value="cpu">CPU</option>
-                  <option value="mainboard">Mainboard</option>
-                  <option value="graphics_card">Graphics Card</option>
-                  <option value="memory">Memory</option>
-                  <option value="harddisk">Harddisk</option>
-                  <option value="ssd_sata">SSD Sata 2.5"</option>
-                  <option value="ssd_pcie">SSD PCIE M.2"</option>
-                  <option value="power_supply">Power Supply</option>
-                  <option value="cpu_cooler">CPU Cooler</option>
-                  <option value="case">Case</option>
-                </select>
+                <select
+                  name="category"
+                  class="form-select"
+                  id="categoryAddProducts"
+                ></select>
               </div>
               <div class="mb-3">
                 <label for="brand" class="form-label">Brand</label>
-                <select name="brand" class="form-select" id="brand">
-                  <option value="select">Select</option>
-                  <option value="intel" data-filter="cpu">Intel</option>
-                  <option value="amd" data-filter="cpu">AMD</option>
-                  <option value="asrock" data-filter="mainboard">Asrock</option>
-                  <option value="asus" data-filter="mainboard">Asus</option>
-                  <option value="gigabyte" data-filter="mainboard">
-                    Gigabyte
-                  </option>
-                  <option value="msi" data-filter="mainboard">MSI</option>
-                </select>
+                <select
+                  name="brand"
+                  class="form-select"
+                  id="brandAddProducts"
+                ></select>
               </div>
               <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
@@ -394,9 +388,10 @@
                   name="title_image"
                   class="form-control"
                   id="title_image"
+                  accept="image/*"
                 />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label for="detial_images" class="form-label"
                   >Detail image (Multiple images)</label
                 >
@@ -405,12 +400,18 @@
                   name="detail_images"
                   class="form-control"
                   id="detail_images"
+                  accept="image/*"
                   multiple
                 />
-              </div>
+              </div> -->
               <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="number" class="form-control" placeholder="Price" />
+                <input
+                  type="number"
+                  name="price"
+                  class="form-control"
+                  placeholder="Price"
+                />
               </div>
               <div class="mb-3">
                 <label for="detail" class="form-label">Detail</label>
@@ -433,5 +434,4 @@
   <script src="../js/bootstrap.min.js"></script>
   <script src="../api/managementAPI.js"></script>
   <script src="../api/productsAPI.js"></script>
-  <script src="../api/productsScript.js"></script>
 </html>
