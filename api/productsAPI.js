@@ -7,25 +7,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log(apiUrl);
     const response = await fetch(apiUrl);
     const data = await response.json();
-    renderTable(data);
+    // renderTable(data);
     return data;
   };
-  let userIDs = [];
+  let productIDs = [];
   const renderTable = (data) => {
+    // console.log(data);
     let rows = 1;
     let itemsHTML = "";
+    productIDs = [];
     data.forEach((item) => {
+      productIDs.push(item.product_id);
       itemsHTML += `
         <tr>
-          <th scope="col" class="text-center"><input type="checkbox"  class="form-check-input" name="selected[]" /></th>
+          <th scope="col" class="text-center"><input type="checkbox"  class="form-check-input" name="product_selected[]" /></th>
           <th scope="col" class="text-center">${rows++}</th>
           <td class="text-truncate">${item.category_name}</td>
           <td class="text-truncate">${item.brand_name}</td>
           <td>${item.product_name}</td>
           <td>${item.price}</td>
-          <td class="text-center"><button class="btn btn-info">Detail</button></td>
+          <td class="text-center"><button class="btn btn-info" 
+          name="${item.product_id}"
+          data-bs-toggle="modal"
+          data-bs-target="#editProductModal"
+          >Detail</button></td>
         </tr>`;
-      userIDs.push(item.product_id);
     });
     document.getElementById("table-body-products").innerHTML = itemsHTML;
   };
@@ -130,6 +136,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderTable(productsObj);
   });
 
+  // Detail product
+  const categoryEditProducts = document.getElementById("categoryEditProducts");
+  categoryEditProducts.addEventListener("change", async () => {
+    if (categoryEditProducts.value == "please_select") {
+      getBrand();
+      return;
+    }
+    getBrand(categoryEditProducts.value);
+  });
+  let modalProduct_id;
+  const detailModalData = () => {
+    const detailBtn = document.querySelectorAll(".btn-info");
+    detailBtn.forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        modalProduct_id = btn.getAttribute("name");
+        console.log("product_id : ", modalProduct_id);
+        const response = await fetch(
+          "http://localhost:5000/api/products/product?product_id=" +
+            modalProduct_id
+        );
+        const data = await response.json();
+        console.log(data);
+        document.getElementById("name_edit").value = data[0].name;
+        document.getElementById("price_edit").value = data[0].price;
+        document.getElementById("detail_edit").value = data[0].detail;
+      });
+    });
+  };
+  detailModalData();
+
+  // Update after edit product
+  const editProductForm = document.getElementById("editProductForm");
+  editProductForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(editProductForm);
+    const response = await fetch(
+      `http://localhost:5000/api/products/update_product`,
+      {
+        method: "PUT",
+        body: formData,
+      }
+    );
+    const data = await response.json();
+  });
   // Add Product
   let addProductCategoryIds;
   let addProductBrandIds;
@@ -141,6 +191,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       itemsHTML += `<option value="${item.category_id}">${item.category_name}</option>`;
     });
     document.getElementById("categoryAddProducts").innerHTML = itemsHTML;
+    document.getElementById("categoryEditProducts").innerHTML = itemsHTML;
   };
   getCategory();
   const getBrand = async (category_id) => {
@@ -159,6 +210,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       itemsHTML += `<option value="${item.brand_id}">${item.brand_name}</option>`;
     });
     document.getElementById("brandAddProducts").innerHTML = itemsHTML;
+    document.getElementById("brandEditProducts").innerHTML = itemsHTML;
   };
   getBrand();
 
@@ -198,16 +250,82 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       );
       addProductModal.hide();
+      getCategory();
+      getBrand();
+      document.getElementById("addProductForm").reset();
       const data = await response.json();
       if (data.status == "success") {
         productsObj = await getData();
         setTimeout(() => {
           renderTable(productsObj);
+          detailModalData();
         }, 100);
       }
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error(error);
+    }
+  });
+
+  // Sort price
+  let priceSorted = false;
+  const sortPrice = () => {
+    if (priceSorted) {
+      productsObj.sort((a, b) => a.price - b.price);
+    } else {
+      productsObj.sort((a, b) => b.price - a.price);
+    }
+    priceSorted = !priceSorted;
+    renderTable(productsObj);
+  };
+  // Sort Price
+  const sortBtnPrice = document.getElementById("sortBtnPrice");
+  sortBtnPrice.addEventListener("click", sortPrice);
+
+  // Delete checkboxes selected
+  const delProduct = document.getElementById("delProduct");
+  delProduct.addEventListener("click", async () => {
+    const product_selected = document.getElementsByName("product_selected[]");
+    let selectedIDs = [];
+    for (let i = 0; i < product_selected.length; i++) {
+      if (product_selected[i].checked) {
+        selectedIDs.push(productIDs[i]);
+      }
+    }
+    if (selectedIDs.length == 0) {
+      alert("Please select at least one product to delete");
+      return;
+    }
+    console.log(selectedIDs);
+    const response = await fetch("http://localhost:5000/api/products/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ selectedIDs }),
+    });
+    const data = await response.json();
+    if (data.status == "success") {
+      // console.log("category : ", filterCategory.value);
+      // console.log("brand : ", filterBrand.value);
+      if (filterCategory.value == "All") {
+        if (filterBrand.value == "All") {
+          // console.log("all all before :", productsObj);
+          productsObj = await getData();
+          // console.log("all all after :", productsObj);
+        } else {
+          productsObj = await getData(`brand_id=${filterBrand.value}`);
+        }
+      } else {
+        if (filterBrand.value == "All") {
+          productsObj = await getData(`category_id=${filterCategory.value}`);
+        } else {
+          productsObj = await getData(
+            `category_id=${filterCategory.value}&brand_id=${filterBrand.value}`
+          );
+        }
+      }
+      renderTable(productsObj);
     }
   });
 });

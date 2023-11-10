@@ -204,7 +204,7 @@
                     <i
                       class="bx bxs-down-arrow mx-2"
                       style="color: white"
-                      id="sortBtnUsername"
+                      id="sortBtnPrice"
                     ></i
                     >Price
                   </th>
@@ -379,6 +379,7 @@
                   name="name"
                   class="form-control"
                   placeholder="Name"
+                  required
                 />
               </div>
               <div class="mb-3">
@@ -389,6 +390,7 @@
                   class="form-control"
                   id="title_image"
                   accept="image/*"
+                  required
                 />
               </div>
               <!-- <div class="mb-3">
@@ -411,6 +413,7 @@
                   name="price"
                   class="form-control"
                   placeholder="Price"
+                  required
                 />
               </div>
               <div class="mb-3">
@@ -424,6 +427,104 @@
               </div>
               <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-success">Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Edit Products Content -->
+    <div class="modal fade" id="editProductModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detail Product</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form
+              id="editProductForm"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="mb-3">
+                <label for="categoryEditProducts" class="form-label"
+                  >Category (Leave it blank without editing)</label
+                >
+                <select
+                  name="categoryEditProducts"
+                  class="form-select"
+                  id="categoryEditProducts"
+                ></select>
+              </div>
+              <div class="mb-3">
+                <label for="brandEditProducts" class="form-label"
+                  >Brand (Leave it blank without editing)</label
+                >
+                <select
+                  name="brandEditProducts"
+                  class="form-select"
+                  id="brandEditProducts"
+                ></select>
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  name="name_edit"
+                  class="form-control"
+                  placeholder="Name"
+                  id="name_edit"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="title_image_edit" class="form-label"
+                  >Title image (Leave it blank without editing)</label
+                >
+                <input
+                  type="file"
+                  name="title_image_edit"
+                  class="form-control"
+                  id="title_image_edit"
+                  accept="image/*"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input
+                  type="number"
+                  name="price_edit"
+                  class="form-control"
+                  placeholder="Price"
+                  id="price_edit"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="detail" class="form-label">Detail</label>
+                <textarea
+                  type="text"
+                  name="detail_edit"
+                  class="form-control"
+                  placeholder="Detail"
+                  id="detail_edit"
+                ></textarea>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-warning me-3">Edit</button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
               </div>
             </form>
           </div>
