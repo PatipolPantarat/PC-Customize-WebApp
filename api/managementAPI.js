@@ -88,15 +88,24 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Swap content with navbar tab
   const accountTab = document.getElementById("accountTab");
   const productTab = document.getElementById("productTab");
+  const setSpecTab = document.getElementById("setSpecTab");
   const accountsContent = document.getElementById("accountsContent");
   const productsContent = document.getElementById("productsContent");
+  const setSpecContent = document.getElementById("setSpecContent");
   accountTab.addEventListener("click", () => {
     accountsContent.style.display = "block";
     productsContent.style.display = "none";
+    setSpecContent.style.display = "none";
   });
   productTab.addEventListener("click", () => {
-    productsContent.style.display = "block";
     accountsContent.style.display = "none";
+    productsContent.style.display = "block";
+    setSpecContent.style.display = "none";
+  });
+  setSpecTab.addEventListener("click", () => {
+    productsContent.style.display = "none";
+    accountsContent.style.display = "none";
+    setSpecContent.style.display = "block";
   });
 
   // Navbar Active

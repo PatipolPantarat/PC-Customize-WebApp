@@ -25,13 +25,19 @@
         <div class="collapse navbar-collapse" id="menu1">
           <ul class="nav nav-underline me-auto">
             <li class="nav-item ms-3">
-              <a href="#" class="nav-link text-white active" id="accountTab"
-                >Accounts</a
+              <a href="#" class="nav-link text-white active" id="setSpecTab"
+                >Set Spec</a
               >
             </li>
+
             <li class="nav-item ms-3">
               <a href="#" class="nav-link text-white" id="productTab"
                 >Products</a
+              >
+            </li>
+            <li class="nav-item ms-3">
+              <a href="#" class="nav-link text-white" id="accountTab"
+                >Accounts</a
               >
             </li>
           </ul>
@@ -41,18 +47,24 @@
             id="showAccount"
             data-bs-toggle="modal"
             data-bs-target="#editThisAccountModal"
-          ></a>
+          >
+          </a>
           <button class="btn btn-outline-primary" id="logoutBtn">Logout</button>
         </div>
       </div>
     </div>
 
     <!-- Accounts Content -->
-    <div class="container mt-5 pt-3 card" id="accountsContent">
+    <div
+      class="container mt-5 pt-3 card"
+      id="accountsContent"
+      style="display: none"
+    >
       <div class="row">
         <div class="col-12 d-flex">
           <button class="btn btn-outline-danger me-auto" id="delAccount">
-            Del Account
+            <i class="bx bx-trash"></i>
+            Delete
           </button>
           <div>
             <input
@@ -138,7 +150,8 @@
       <div class="row">
         <div class="col-12 d-flex">
           <button class="btn btn-outline-danger me-auto" id="delProduct">
-            Del Product
+            <i class="bx bx-trash"></i>
+            Delete
           </button>
 
           <button
@@ -221,6 +234,14 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Set Spec Content -->
+    <div class="container mt-5 pt-3" id="setSpecContent" style="display: block">
+      <div
+        class="row row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3"
+        id="cardsContent"
+      ></div>
     </div>
 
     <!-- Modal Add Account Content -->
@@ -436,7 +457,7 @@
 
     <!-- Modal Edit Products Content -->
     <div class="modal fade" id="editProductModal">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Detail Product</h5>
@@ -446,30 +467,46 @@
               data-bs-dismiss="modal"
             ></button>
           </div>
-          <div class="modal-body">
-            <form
+          <div class="modal-body d-flex">
+            <div id="image_edit_detail"></div>
+            <div class="d-flex flex-column me-5">
+              <label class="form-label mb-3">Category</label>
+              <label class="form-label mb-3">Brand</label>
+              <label class="form-label mb-3">Name</label>
+              <label class="form-label mb-3">Price</label>
+              <label class="form-label mb-3">Detail</label>
+            </div>
+
+            <div class="d-flex flex-column">
+              <label class="form-label mb-3" id="category_edit_detail"></label>
+              <label class="form-label mb-3" id="brand_edit_detail"></label>
+              <label class="form-label mb-3" id="name_edit_detail"></label>
+              <label class="form-label mb-3" id="price_edit_detail"></label>
+              <label class="form-label mb-3" id="detail_edit_detail"></label>
+            </div>
+            <!-- <form
               id="editProductForm"
-              method="post"
+              method="put"
               enctype="multipart/form-data"
             >
               <div class="mb-3">
                 <label for="categoryEditProducts" class="form-label"
-                  >Category (Leave it blank without editing)</label
+                  >Category</label
                 >
                 <select
                   name="categoryEditProducts"
                   class="form-select"
                   id="categoryEditProducts"
+                  disabled
                 ></select>
               </div>
               <div class="mb-3">
-                <label for="brandEditProducts" class="form-label"
-                  >Brand (Leave it blank without editing)</label
-                >
+                <label for="brandEditProducts" class="form-label">Brand</label>
                 <select
                   name="brandEditProducts"
                   class="form-select"
                   id="brandEditProducts"
+                  disabled
                 ></select>
               </div>
               <div class="mb-3">
@@ -526,7 +563,62 @@
                   Close
                 </button>
               </div>
-            </form>
+            </form> -->
+          </div>
+          <div class="modal-footer d-flex justify-content-end">
+            <button type="button" class="btn btn-warning me-3">Edit</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              data-bs-target="#editProductModal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Detail Product -->
+    <div class="modal fade" id="detailProductModal">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detail Product</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body d-flex">
+            <div id="image_detail"></div>
+            <div class="d-flex flex-column me-5">
+              <label class="form-label mb-3">Category</label>
+              <label class="form-label mb-3">Brand</label>
+              <label class="form-label mb-3">Name</label>
+              <label class="form-label mb-3">Price</label>
+              <label class="form-label mb-3">Detail</label>
+            </div>
+
+            <div class="d-flex flex-column">
+              <label class="form-label mb-3" id="category_detail"></label>
+              <label class="form-label mb-3" id="brand_detail"></label>
+              <label class="form-label mb-3" id="name_detail"></label>
+              <label class="form-label mb-3" id="price_detail"></label>
+              <label class="form-label mb-3" id="product_detail"></label>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              data-bs-target="#detailProductModal"
+            >
+              Close
+            </button>
           </div>
         </div>
       </div>
@@ -535,4 +627,5 @@
   <script src="../js/bootstrap.min.js"></script>
   <script src="../api/managementAPI.js"></script>
   <script src="../api/productsAPI.js"></script>
+  <script src="../api/setSpecAPI.js"></script>
 </html>

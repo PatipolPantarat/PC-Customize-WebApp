@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           <td class="text-truncate">${item.category_name}</td>
           <td class="text-truncate">${item.brand_name}</td>
           <td>${item.product_name}</td>
-          <td>${item.price}</td>
-          <td class="text-center"><button class="btn btn-info" 
+          <td>${item.price.toLocaleString("en-US")} Baht</td>
+          <td class="text-center"><button class="btn btn-info p-edit" 
           name="${item.product_id}"
           data-bs-toggle="modal"
           data-bs-target="#editProductModal"
@@ -137,17 +137,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // Detail product
-  const categoryEditProducts = document.getElementById("categoryEditProducts");
-  categoryEditProducts.addEventListener("change", async () => {
-    if (categoryEditProducts.value == "please_select") {
-      getBrand();
-      return;
-    }
-    getBrand(categoryEditProducts.value);
-  });
+  // const categoryEditProducts = document.getElementById("categoryEditProducts");
+  // categoryEditProducts.addEventListener("change", () => {
+  //   if (categoryEditProducts.value == "please_select") {
+  //     getBrand();
+  //     return;
+  //   }
+  //   getBrand(categoryEditProducts.value);
+  // });
   let modalProduct_id;
   const detailModalData = () => {
-    const detailBtn = document.querySelectorAll(".btn-info");
+    const detailBtn = document.querySelectorAll(".p-edit");
+    console.log(detailBtn);
     detailBtn.forEach((btn) => {
       btn.addEventListener("click", async () => {
         modalProduct_id = btn.getAttribute("name");
@@ -158,28 +159,40 @@ document.addEventListener("DOMContentLoaded", async () => {
         );
         const data = await response.json();
         console.log(data);
-        document.getElementById("name_edit").value = data[0].name;
-        document.getElementById("price_edit").value = data[0].price;
-        document.getElementById("detail_edit").value = data[0].detail;
+        document.getElementById(
+          "image_edit_detail"
+        ).innerHTML = `<img src="${data[0].title_image}" width="300" height="300" class="me-3">`;
+        document.getElementById("category_edit_detail").innerHTML =
+          data[0].pc_name;
+        document.getElementById("brand_edit_detail").innerHTML =
+          data[0].pb_name;
+        document.getElementById("name_edit_detail").innerHTML = data[0].name;
+        document.getElementById("price_edit_detail").innerHTML = data[0].price;
+        document.getElementById("detail_edit_detail").innerHTML =
+          data[0].detail || "N/A";
       });
     });
   };
   detailModalData();
 
   // Update after edit product
-  const editProductForm = document.getElementById("editProductForm");
-  editProductForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(editProductForm);
-    const response = await fetch(
-      `http://localhost:5000/api/products/update_product`,
-      {
-        method: "PUT",
-        body: formData,
-      }
-    );
-    const data = await response.json();
-  });
+  // const editProductForm = document.getElementById("editProductForm");
+  // editProductForm.addEventListener("submit", async (e) => {
+  //   e.preventDefault();
+  //   console.log("product_id : ", modalProduct_id);
+  //   // const formData = new FormData(editProductForm);
+  //   // const response = await fetch(
+  //   //   `http://localhost:5000/api/products/update_product/${modalProduct_id}`,
+  //   //   {
+  //   //     method: "PUT",
+  //   //     headers: {
+  //   //       "Content-Type": "application/json",
+  //   //     },
+  //   //     body: formData,
+  //   //   }
+  //   // );
+  //   // const data = await response.json();
+  // });
   // Add Product
   let addProductCategoryIds;
   let addProductBrandIds;
@@ -191,7 +204,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       itemsHTML += `<option value="${item.category_id}">${item.category_name}</option>`;
     });
     document.getElementById("categoryAddProducts").innerHTML = itemsHTML;
-    document.getElementById("categoryEditProducts").innerHTML = itemsHTML;
+    // document.getElementById("categoryEditProducts").innerHTML = itemsHTML;
   };
   getCategory();
   const getBrand = async (category_id) => {
@@ -210,7 +223,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       itemsHTML += `<option value="${item.brand_id}">${item.brand_name}</option>`;
     });
     document.getElementById("brandAddProducts").innerHTML = itemsHTML;
-    document.getElementById("brandEditProducts").innerHTML = itemsHTML;
+    // document.getElementById("brandEditProducts").innerHTML = itemsHTML;
   };
   getBrand();
 
