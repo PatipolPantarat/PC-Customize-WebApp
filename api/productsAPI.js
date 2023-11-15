@@ -1,4 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
+  let productIDs = [];
+  let editProductID;
   const getData = async (params) => {
     let apiUrl = "http://localhost:5000/api/products/all";
     if (params) {
@@ -10,7 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // renderTable(data);
     return data;
   };
-  let productIDs = [];
   const renderTable = (data) => {
     // console.log(data);
     let rows = 1;
@@ -24,12 +25,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           <th scope="col" class="text-center">${rows++}</th>
           <td class="text-truncate">${item.category_name}</td>
           <td class="text-truncate">${item.brand_name}</td>
-          <td>${item.product_name}</td>
-          <td>${item.price.toLocaleString("en-US")} Baht</td>
+          <td class="text-truncate">${item.product_name}</td>
+          <td class="text-truncate">${item.price.toLocaleString(
+            "en-US"
+          )} Baht</td>
           <td class="text-center"><button class="btn btn-info p-edit" 
           name="${item.product_id}"
           data-bs-toggle="modal"
-          data-bs-target="#editProductModal"
+          data-bs-target="#editToggleModal_1"
           >Detail</button></td>
         </tr>`;
     });
@@ -136,15 +139,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderTable(productsObj);
   });
 
-  // Detail product
-  // const categoryEditProducts = document.getElementById("categoryEditProducts");
-  // categoryEditProducts.addEventListener("change", () => {
-  //   if (categoryEditProducts.value == "please_select") {
-  //     getBrand();
-  //     return;
-  //   }
-  //   getBrand(categoryEditProducts.value);
-  // });
+  // Detail Modal Before Edit
   let modalProduct_id;
   const detailModalData = () => {
     const detailBtn = document.querySelectorAll(".p-edit");
@@ -158,7 +153,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             modalProduct_id
         );
         const data = await response.json();
-        console.log(data);
+        // send data to edit modal function
+        editModalData(data);
         document.getElementById(
           "image_edit_detail"
         ).innerHTML = `<img src="${data[0].title_image}" width="300" height="300" class="me-3">`;
@@ -175,35 +171,111 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
   detailModalData();
 
-  // Update after edit product
-  // const editProductForm = document.getElementById("editProductForm");
-  // editProductForm.addEventListener("submit", async (e) => {
-  //   e.preventDefault();
-  //   console.log("product_id : ", modalProduct_id);
-  //   // const formData = new FormData(editProductForm);
-  //   // const response = await fetch(
-  //   //   `http://localhost:5000/api/products/update_product/${modalProduct_id}`,
-  //   //   {
-  //   //     method: "PUT",
-  //   //     headers: {
-  //   //       "Content-Type": "application/json",
-  //   //     },
-  //   //     body: formData,
-  //   //   }
-  //   // );
-  //   // const data = await response.json();
-  // });
+  // Edit Modal
+
+  const editModalData = async (data) => {
+    console.log("Func editModalData : ", data);
+    editProductID = data[0].id;
+    document.getElementById(
+      "show_image_edit"
+    ).innerHTML = `<img src="${data[0].title_image}" width="300" height="300">`;
+    // document.getElementById("form_edit_category").value = data[0].pc_name;
+    // document.getElementById("form_edit_brand").value = data[0].pb_name;
+    document.getElementById("form_edit_name").value = data[0].name;
+    document.getElementById("form_edit_price").value = data[0].price;
+    document.getElementById("form_edit_detail").value = data[0].detail;
+
+    // preview image
+    document
+      .getElementById("form_edit_image")
+      .addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            document.getElementById(
+              "show_image_edit"
+            ).innerHTML = `<img src="${reader.result}" width="300" height="300" style="object-fit: contain;">`;
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+  };
+  const form_edit_category = document.getElementById("form_edit_category");
+  form_edit_category.addEventListener("change", async () => {
+    if (form_edit_category.value == "please_select") {
+      getBrand();
+      return;
+    }
+    getBrand(form_edit_category.value);
+  });
+  // Close modal
+  const editToggleModal_2 = new bootstrap.Modal(
+    document.getElementById("editToggleModal_2")
+  );
+  // edit product form
+  const editProductForm = document.getElementById("editProductForm");
+  editProductForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("product_id", editProductID);
+    formData.append("name", document.getElementById("form_edit_name").value);
+    formData.append("price", document.getElementById("form_edit_price").value);
+    formData.append(
+      "detail",
+      document.getElementById("form_edit_detail").value
+    );
+    formData.append(
+      "category_id",
+      document.getElementById("form_edit_category").value
+    );
+    formData.append(
+      "brand_id",
+      document.getElementById("form_edit_brand").value
+    );
+    formData.append(
+      "form_edit_image",
+      document.getElementById("form_edit_image").files[0]
+    );
+    if (
+      document.getElementById("form_edit_category").value == "please_select" ||
+      document.getElementById("form_edit_brand").value == "please_select"
+    ) {
+      alert("Please select category and brand");
+      return;
+    }
+    const response = await fetch(
+      "http://localhost:5000/api/products/update_product",
+      {
+        method: "PUT",
+
+        body: formData,
+      }
+    );
+    const data = await response.json();
+    editToggleModal_2.hide();
+    if (data.status == "success") {
+      productsObj = await getData();
+      setTimeout(() => {
+        renderTable(productsObj);
+        detailModalData();
+      }, 100);
+    }
+  });
+
   // Add Product
   let addProductCategoryIds;
   let addProductBrandIds;
   const getCategory = async () => {
     const response = await fetch("http://localhost:5000/api/products/category");
     const data = await response.json();
+
     let itemsHTML = `<option value="please_select">Please Select</option>`;
     data.forEach((item) => {
       itemsHTML += `<option value="${item.category_id}">${item.category_name}</option>`;
     });
     document.getElementById("categoryAddProducts").innerHTML = itemsHTML;
+    document.getElementById("form_edit_category").innerHTML = itemsHTML;
     // document.getElementById("categoryEditProducts").innerHTML = itemsHTML;
   };
   getCategory();
@@ -223,6 +295,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       itemsHTML += `<option value="${item.brand_id}">${item.brand_name}</option>`;
     });
     document.getElementById("brandAddProducts").innerHTML = itemsHTML;
+    document.getElementById("form_edit_brand").innerHTML = itemsHTML;
     // document.getElementById("brandEditProducts").innerHTML = itemsHTML;
   };
   getBrand();
@@ -230,6 +303,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const categoryAddProducts = document.getElementById("categoryAddProducts");
   categoryAddProducts.addEventListener("change", async () => {
     if (categoryAddProducts.value == "please_select") {
+      getBrand();
       return;
     }
     getBrand(categoryAddProducts.value);
@@ -239,12 +313,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const addProductForm = document.getElementById("addProductForm");
   const title_image = document.getElementById("title_image");
   const detail_images = document.getElementById("detail_images");
+  // Close modal
   const addProductModal = new bootstrap.Modal(
     document.getElementById("addProductModal")
   );
   addProductForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    // Close modal
     if (
       categoryAddProducts.value == "please_select" ||
       brandAddProducts.value == "please_select"
@@ -253,7 +327,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
     const formData = new FormData(addProductForm);
-
+    console.log("formData : ", formData);
     try {
       const response = await fetch(
         "http://localhost:5000/api/products/add_products",

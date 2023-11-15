@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let userIDs = [];
   let isUserLogin;
+  let accountObj = {};
 
   // Get data from api
   const getData = async () => {
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const data = await response.json();
     return data;
   };
+
   // Render table function
   const renderTable = (data) => {
     let rows = 1;
@@ -17,15 +19,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     data.forEach((item) => {
       if (item.username != isUserLogin) {
         itemsHTML += `
-              <tr>
-                <th scope="col" class="text-center"><input type="checkbox"  class="form-check-input" name="selected[]" /></th>
-                <th scope="col" class="text-center">${rows++}</th>
-                <td>${item.username}</td>
-                <td>${item.email}</td>
-                <td>${item.account_type}</td>
-                <td>${item.created_at}</td>
-                <td>${item.updated_at}</td>
-              </tr>`;
+            <tr>
+              <th scope="col" class="text-center"><input type="checkbox"  class="form-check-input" name="selected[]" /></th>
+              <th scope="col" class="text-center">${rows++}</th>
+              <td>${item.username}</td>
+              <td>${item.email}</td>
+              <td>${item.account_type}</td>
+              <td>${item.created_at}</td>
+              <td>${item.updated_at}</td>
+            </tr>`;
         userIDs.push(item.id);
       }
     });
@@ -46,16 +48,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (data.status == "ok") {
       userAcc.textContent = data.message;
       isUserLogin = data.message;
+      accountObj = await getData();
+      renderTable(accountObj);
     } else {
       localStorage.removeItem("token");
       window.location.href = "/Management/login.html";
     }
   };
   authenticationWithAPI();
-
-  // Show all User
-  let accountObj = await getData();
-  renderTable(accountObj);
 
   // if (!token) {
   //   window.location.href = "/Management/login.html";
