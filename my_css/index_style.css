@@ -1,0 +1,84 @@
+.navbar-text:hover {
+  transform: scale(1.03);
+  text-decoration: underline;
+  color: white;
+}
+.price-container {
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  display: flex;
+}
+.price-item {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+}
+.filter-container {
+  width: 100%;
+  height: 80px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.set-spec-container {
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+.set-spec-item {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 30px;
+  padding-right: 20px;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+  border-bottom: 1px solid lightgray;
+  &&:last-child {
+    border-bottom: none;
+  }
+}
+.set-spec-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+.set-spec-item .text-truncate {
+  font-size: 16px;
+  margin-left: 15px;
+  margin-right: auto;
+  color: black;
+  font-weight: 500;
+}
+.set-spec-item span {
+  font-size: 16px;
+  font-weight: bold;
+  color: orange;
+}
+.set-spec-item:hover {
+  background: #f0f0f0;
+}
+.set-spec-item.active {
+  border-left: 4px solid #0d6efd;
+}
+.products-container {
+  width: 100%;
+  height: 100vh;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+table {
+  width: 100%;
+}

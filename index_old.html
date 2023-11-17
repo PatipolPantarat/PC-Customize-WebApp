@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="CSS/navbar.css" />
+    <link rel="stylesheet" href="CSS/index.css" />
+    <link rel="stylesheet" href="CSS/footer.css" />
+    <title>jib spec</title>
+  </head>
+  <body>
+    <div class="page">
+      <div class="navbar">
+        <div class="navbar-container">
+          <p>PC Customize</p>
+          <div class="auth-btn">
+            <button id="login-btn">Login</button>
+            <button id="logout-btn" style="display: none">Logout</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-container">
+        <div class="block-1"><p>Price : 120,000 บาท</p></div>
+        <div class="block-2" id="block-2">
+          <div class="filter">
+            <label for="brand-cpu">Brand</label>
+            <select id="brand-cpu">
+              <option value="Select">Select</option>
+              <option value="Intel">Intel</option>
+              <option value="AMD">AMD</option>
+            </select>
+          </div>
+          <div class="filter">
+            <label for="model-cpu">Model</label>
+            <select id="model-cpu">
+              <option value="Select">Select</option>
+              <option value="i3">Core i3</option>
+              <option value="i5">Core i5</option>
+              <option value="i7">Core i7</option>
+              <option value="i9">Core i9</option>
+              <option value="r3">Ryzen 3</option>
+              <option value="r5">Ryzen 5</option>
+              <option value="r7">Ryzen 7</option>
+              <option value="r9">Ryzen 9</option>
+            </select>
+          </div>
+          <div class="filter">
+            <label for="socket-cpu">Socket</label>
+            <select id="socket-cpu">
+              <option value="Select">Select</option>
+              <option value="LGA1200">LGA 1200</option>
+              <option value="LGA1700">LGA 1700</option>
+              <option value="AM4">AM4</option>
+              <option value="AM4">AM5</option>
+            </select>
+          </div>
+          <div class="filter">
+            <label for="brand-cpu">Search</label>
+            <div class="search">
+              <input id="search" type="search" placeholder="Search..." />
+              <button type="submit">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-container">
+        <div class="spec-container">
+          <div class="menu-box" id="cpu"><a>CPU</a></div>
+          <div class="menu-box" id="mainboard"><a>Mainboard</a></div>
+          <div class="menu-box"><a>VGA Card</a></div>
+          <div class="menu-box"><a>Memory</a></div>
+          <div class="menu-box"><a>Harddisk</a></div>
+          <div class="menu-box"><a>SSD Sata 2.5"</a></div>
+          <div class="menu-box"><a>SSD PCIE M.2</a></div>
+          <div class="menu-box"><a>Power Supply</a></div>
+          <div class="menu-box"><a>Air Cooler</a></div>
+          <div class="menu-box"><a>Liquid Cooler</a></div>
+          <div class="menu-box"><a>Case</a></div>
+        </div>
+
+        <div class="products-container" id="products-container"></div>
+        <!-- <table>
+        <tr>
+          <td>
+            <div class="product-header">
+              <div class="product-brand">AMD</div>
+              <div class="product-model" name="product-model">
+                Ryzen 5 5600X 3.7GHz
+              </div>
+            </div>
+            <div class="product-img">
+              <img src="https://picsum.photos/200" alt="Loading..." />
+            </div>
+            <div class="product-price">
+              <div>Price</div>
+              <div class="price">120,000 บาท</div>
+            </div>
+            <div class="product-btn">
+              <input type="button" value="Add to Spec" name="addtospec" />
+              <input type="button" value="Detail" id="detail" name="detail" />
+            </div>
+          </td>
+          <td>
+            <div class="product-header">
+              <div class="product-brand">AMD</div>
+              <div class="product-model" name="product-model">
+                Ryzen 5 5600X 3.7GHz
+              </div>
+            </div>
+            <div class="product-img">
+              <img src="https://picsum.photos/200" alt="Loading..." />
+            </div>
+            <div class="product-price">
+              <div>Price</div>
+              <div class="price">120,000 บาท</div>
+            </div>
+            <div class="product-btn">
+              <input type="button" value="Add to Spec" name="addtospec" />
+              <input type="button" value="Detail" id="detail" name="detail" />
+            </div>
+          </td>
+          <td>
+            <div class="product-header">
+              <div class="product-brand">AMD</div>
+              <div class="product-model">Ryzen 5 5600X 3.7GHz</div>
+            </div>
+            <div class="product-img">
+              <img src="https://picsum.photos/200" alt="Loading..." />
+            </div>
+            <div class="product-price">
+              <div>Price</div>
+              <div class="price">120,000 บาท</div>
+            </div>
+            <div class="product-btn">
+              <input type="button" value="Add to Spec" />
+              <input type="button" value="Detail" id="detail" />
+            </div>
+          </td>
+          <td>
+            <div class="product-header">
+              <div class="product-brand">AMD</div>
+              <div class="product-model">Ryzen 5 5600X 3.7GHz</div>
+            </div>
+            <div class="product-img">
+              <img src="https://picsum.photos/200" alt="Loading..." />
+            </div>
+            <div class="product-price">
+              <div>Price</div>
+              <div class="price">120,000 บาท</div>
+            </div>
+            <div class="product-btn">
+              <input type="button" value="Add to Spec" />
+              <input type="button" value="Detail" id="detail" />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="product-header">
+              <div class="product-brand">AMD</div>
+              <div class="product-model">Ryzen 5 5600X 3.7GHz</div>
+            </div>
+            <div class="product-img">
+              <img src="https://picsum.photos/200" alt="Loading..." />
+            </div>
+            <div class="product-price">
+              <div>Price</div>
+              <div class="price">120,000 บาท</div>
+            </div>
+            <div class="product-btn">
+              <input type="button" value="Add to Spec" />
+              <input type="button" value="Detail" id="detail" />
+            </div>
+          </td>
+          <td>
+            <div class="product-header">
+              <div class="product-brand">AMD</div>
+              <div class="product-model">Ryzen 5 5600X 3.7GHz</div>
+            </div>
+            <div class="product-img">
+              <img src="https://picsum.photos/200" alt="Loading..." />
+            </div>
+            <div class="product-price">
+              <div>Price</div>
+              <div class="price">120,000 บาท</div>
+            </div>
+            <div class="product-btn">
+              <input type="button" value="Add to Spec" />
+              <input type="button" value="Detail" id="detail" />
+            </div>
+          </td>
+        </tr>
+      </table> -->
+      </div>
+
+      <!-- <table id="data-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"> -->
+      <!-- Data will be inserted here -->
+      <!-- </tbody>
+    </table>
+    <div id="pagination"></div>
+    <script src="JS/table.js"></script> -->
+      <footer>
+        <div class="footer-container">
+          <label>Product Management</label>
+          <button id="backoffice-btn">Back Office</button>
+        </div>
+      </footer>
+    </div>
+  </body>
+  <!-- <script src="js/connectAPI.js"></script> -->
+  <script src="js/index.js"></script>
+  <!-- <script src="JS/spec_select.js"></script> -->
+</html>

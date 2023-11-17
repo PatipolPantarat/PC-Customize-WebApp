@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const renderTable = (data) => {
+  const renderCard = (data) => {
     let itemsHTML = "";
     data.forEach((item) => {
       itemsHTML += `
@@ -11,18 +11,20 @@ document.addEventListener("DOMContentLoaded", async () => {
               style="height: 200px; width: 200px"
             />
           </div>
-          <div class="card-body d-flex justify-content-between">
-            <div>
-              <h5>${item.brand_name}</h5>
-              <p class="card-text">${item.product_name}</p>
-            </div>
-            <div>
-              <p class="card-text">${item.price} Baht</p>
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h5 class="card-title">${item.brand_name}</h5>
+              <p class="card-text">${item.price.toLocaleString("en-US")} ฿</p>
+              </div>
+              <div>
+              <p class="card-text text-truncate">${item.product_name}</p>
             </div>
           </div>
           <div class="card-footer d-flex justify-content-evenly">
             <button class="btn btn-success">Set Spec</button>
-            <button class="btn btn-info setSpec" name="${item.product_id}" data-bs-toggle="modal" data-bs-target="#detailProductModal"
+            <button class="btn btn-info setSpec" name="${
+              item.product_id
+            }" data-bs-toggle="modal" data-bs-target="#detailProductModal"
             >Detail</button>
           </div>
         </div>
@@ -38,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     return data;
   };
   const result = await getData();
-  renderTable(result);
+  renderCard(result);
 
   let modalProduct_id;
   const detailModalData = () => {
@@ -60,11 +62,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("category_detail").innerHTML = data[0].pc_name;
         document.getElementById("brand_detail").innerHTML = data[0].pb_name;
         document.getElementById("name_detail").innerHTML = data[0].name;
-        document.getElementById("price_detail").innerHTML = data[0].price;
+        document.getElementById("price_detail").innerHTML =
+          data[0].price.toLocaleString("en-US") + " ฿";
         document.getElementById("product_detail").innerHTML =
           data[0].detail || "N/A";
       });
     });
   };
   detailModalData();
+
+  document.getElementById("setSpecTab").addEventListener("click", async () => {
+    const result = await getData();
+    renderCard(result);
+    detailModalData();
+  });
 });

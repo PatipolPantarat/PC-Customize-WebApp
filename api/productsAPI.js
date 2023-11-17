@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
   let productIDs = [];
   let editProductID;
+  let modalProduct_id;
+  let productsCategoryIds = [];
+  let productsBrandIds = [];
+
   const getData = async (params) => {
     let apiUrl = "http://localhost:5000/api/products/all";
     if (params) {
@@ -26,9 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <td class="text-truncate">${item.category_name}</td>
           <td class="text-truncate">${item.brand_name}</td>
           <td class="text-truncate">${item.product_name}</td>
-          <td class="text-truncate">${item.price.toLocaleString(
-            "en-US"
-          )} Baht</td>
+          <td class="text-truncate">${item.price.toLocaleString("en-US")} ฿</td>
           <td class="text-center"><button class="btn btn-info p-edit" 
           name="${item.product_id}"
           data-bs-toggle="modal"
@@ -63,8 +65,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
   // Filter products
-  let productsCategoryIds = [];
-  let productsBrandIds = [];
+
   const getProductsBrand = async (category_id) => {
     if (!category_id) {
       const response = await fetch("http://localhost:5000/api/products/brand");
@@ -108,10 +109,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       productsObj = await getData();
       getProductsBrand();
       renderTable(productsObj);
+      detailModalData();
       return;
     }
     productsObj = await getData(`category_id=${filterCategory.value}`);
     renderTable(productsObj);
+    detailModalData();
     getProductsBrand(filterCategory.value);
   });
   const filterBrand = document.getElementById("filterBrand");
@@ -121,33 +124,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (filterCategory.value != "All" && filterBrand.value == "All") {
       productsObj = await getData(`category_id=${filterCategory.value}`);
       renderTable(productsObj);
+      detailModalData();
       return;
     }
     if (filterCategory.value == "All" && filterBrand.value != "All") {
       productsObj = await getData(`brand_id=${filterBrand.value}`);
       renderTable(productsObj);
+      detailModalData();
       return;
     }
     if (filterCategory.value == "All" && filterBrand.value == "All") {
       productsObj = await getData();
       renderTable(productsObj);
+      detailModalData();
       return;
     }
     productsObj = await getData(
       `category_id=${filterCategory.value}&brand_id=${filterBrand.value}`
     );
     renderTable(productsObj);
+    detailModalData();
   });
 
   // Detail Modal Before Edit
-  let modalProduct_id;
-  const detailModalData = () => {
+
+  const detailModalData = async () => {
     const detailBtn = document.querySelectorAll(".p-edit");
     console.log(detailBtn);
     detailBtn.forEach((btn) => {
       btn.addEventListener("click", async () => {
         modalProduct_id = btn.getAttribute("name");
-        console.log("product_id : ", modalProduct_id);
+        console.log("detailModalData : ", modalProduct_id);
         const response = await fetch(
           "http://localhost:5000/api/products/product?product_id=" +
             modalProduct_id
@@ -163,13 +170,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("brand_edit_detail").innerHTML =
           data[0].pb_name;
         document.getElementById("name_edit_detail").innerHTML = data[0].name;
-        document.getElementById("price_edit_detail").innerHTML = data[0].price;
+        document.getElementById("price_edit_detail").innerHTML =
+          data[0].price.toLocaleString("en-US") + " ฿";
         document.getElementById("detail_edit_detail").innerHTML =
           data[0].detail || "N/A";
       });
     });
   };
-  detailModalData();
+  document.getElementById("productTab").addEventListener("click", () => {
+    detailModalData();
+  });
 
   // Edit Modal
 
@@ -213,6 +223,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const editToggleModal_2 = new bootstrap.Modal(
     document.getElementById("editToggleModal_2")
   );
+
+  // Edit Button
+  document.getElementById("editButton").addEventListener("click", () => {
+    getCategory();
+    getBrand();
+  });
+
   // edit product form
   const editProductForm = document.getElementById("editProductForm");
   editProductForm.addEventListener("submit", async (e) => {
@@ -248,24 +265,24 @@ document.addEventListener("DOMContentLoaded", async () => {
       "http://localhost:5000/api/products/update_product",
       {
         method: "PUT",
-
         body: formData,
       }
     );
     const data = await response.json();
     editToggleModal_2.hide();
+    document.getElementById("form_edit_image").innerHTML = "";
     if (data.status == "success") {
       productsObj = await getData();
       setTimeout(() => {
         renderTable(productsObj);
         detailModalData();
+        getProductsCategory();
+        getProductsBrand();
       }, 100);
     }
   });
 
   // Add Product
-  let addProductCategoryIds;
-  let addProductBrandIds;
   const getCategory = async () => {
     const response = await fetch("http://localhost:5000/api/products/category");
     const data = await response.json();
