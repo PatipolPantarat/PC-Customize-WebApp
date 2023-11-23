@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
     const data = await response.json();
     editToggleModal_2.hide();
-    document.getElementById("form_edit_image").innerHTML = "";
+    document.getElementById("form_edit_image").value = "";
     if (data.status == "success") {
       productsObj = await getData();
       setTimeout(() => {
@@ -280,6 +280,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         getProductsBrand();
       }, 100);
     }
+  });
+  document.getElementById("btn_back_edit").addEventListener("click", () => {
+    document.getElementById("form_edit_image").value = "";
   });
 
   // Add Product

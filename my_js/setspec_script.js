@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const response = await fetch("http://localhost:5000/api/products/category");
   const categoryList = await response.json();
-  console.log(categoryList);
-
+  console.log("categoryList : ", categoryList);
   let index = 0;
   const setSpecItem = document.querySelectorAll(".set-spec-item");
   setSpecItem.forEach((item) => {

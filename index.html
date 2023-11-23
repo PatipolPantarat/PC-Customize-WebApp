@@ -52,8 +52,8 @@
       <div class="row mb-2">
         <div class="col-3">
           <div class="price-container">
-            <a href="#" class="price-item"> Total </a>
-            <a href="#" class="price-item"> 102,000 ฿ </a>
+            <a href="#" class="price-item">Total</a>
+            <a href="#" class="price-item" id="total_price">0 ฿</a>
           </div>
         </div>
         <div class="col-9">
@@ -66,7 +66,7 @@
                 style="width: 180px"
               ></select>
             </div>
-            <div>
+            <!-- <div>
               <div class="input-group d-flex">
                 <input type="text" class="form-control" placeholder="Search" />
                 <button
@@ -77,35 +77,200 @@
                   Search
                 </button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-3">
           <div class="set-spec-container">
-            <a href="#" class="set-spec-item">CPU</a>
-            <a href="#" class="set-spec-item">
-              <!-- <img src="https://picsum.photos/200" />
-              <span class="text-truncate">B760</span>
-              <span>3,690.-</span> -->
-              Mainboard
-            </a>
-            <a href="#" class="set-spec-item">Memory</a>
-            <a href="#" class="set-spec-item">Graphics Card</a>
-            <a href="#" class="set-spec-item">Harddisk</a>
-            <a href="#" class="set-spec-item">SSD SATA 2.5"</a>
-            <a href="#" class="set-spec-item">SSD PCIE M.2</a>
-            <a href="#" class="set-spec-item">Power Supply</a>
-            <a href="#" class="set-spec-item">CPU Cooler</a>
-            <a href="#" class="set-spec-item">Case</a>
+            <div class="set-spec-item" id="setSpecCpu">
+              <a href="#">CPU</a>
+            </div>
+            <div class="set-spec-item" id="setSpecMB">
+              <a href="#"> Mainboard </a>
+            </div>
+            <div class="set-spec-item" id="setSpecMemory">
+              <a href="#">Memory</a>
+            </div>
+            <div class="set-spec-item" id="setSpecGpu">
+              <a href="#">Graphics Card</a>
+            </div>
+            <div class="set-spec-item" id="setSpecHdd">
+              <a href="#">Harddisk</a>
+            </div>
+            <div class="set-spec-item" id="setSpecSsdsata">
+              <a href="#">SSD SATA 2.5"</a>
+            </div>
+            <div class="set-spec-item" id="setSpecSsdpcie">
+              <a href="#">SSD PCIE M.2</a>
+            </div>
+            <div class="set-spec-item" id="setSpecPSU">
+              <a href="#">Power Supply</a>
+            </div>
+            <div class="set-spec-item" id="setSpecCooler">
+              <a href="#">CPU Cooler</a>
+            </div>
+            <div class="set-spec-item" id="setSpecCase">
+              <a href="#">Case</a>
+            </div>
           </div>
         </div>
         <div class="col-9">
-          <div
-            class="row row-cols-md-3 row-cols-lg-4 g-2"
-            id="cardsContent"
-          ></div>
+          <div class="row row-cols-md-3 row-cols-lg-4 g-2" id="cardsContent">
+            <!-- item 1 -->
+            <!-- <div class="col">
+              <div class="card">
+                <div class="card-header mx-auto">
+                  <img
+                    src="${item.title_image}"
+                    style="height: 150px; width: 150px"
+                  />
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title">Intel</h5>
+                    <p class="card-text">12,900 ฿</p>
+                  </div>
+                  <div>
+                    <p class="card-text text-truncate">Core i9 14900K</p>
+                  </div>
+                </div>
+                <div class="card-footer d-flex justify-content-evenly">
+                  <button
+                    class="btn btn-success setSpecBtn"
+                    data-product-price="${item.price}"
+                    data-pid="item_1"
+                    data-pcid="cate_1"
+                  >
+                    Set Spec
+                  </button>
+                  <button
+                    class="btn btn-info detailBtn"
+                    data-product-id="${item.product_id}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailProductModal"
+                  >
+                    Detail
+                  </button>
+                </div>
+              </div>
+            </div> -->
+            <!-- item 2 -->
+            <!-- <div class="col">
+              <div class="card">
+                <div class="card-header mx-auto">
+                  <img
+                    src="${item.title_image}"
+                    style="height: 150px; width: 150px"
+                  />
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title">Asus</h5>
+                    <p class="card-text">3,790 ฿</p>
+                  </div>
+                  <div>
+                    <p class="card-text text-truncate">B760M</p>
+                  </div>
+                </div>
+                <div class="card-footer d-flex justify-content-evenly">
+                  <button
+                    class="btn btn-success setSpecBtn"
+                    data-product-price="${item.price}"
+                    data-pid="item_2"
+                    data-pcid="cate_2"
+                  >
+                    Set Spec
+                  </button>
+                  <button
+                    class="btn btn-info detailBtn"
+                    data-product-id="${item.product_id}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailProductModal"
+                  >
+                    Detail
+                  </button>
+                </div>
+              </div>
+            </div> -->
+            <!-- item 3 -->
+            <!-- <div class="col">
+              <div class="card">
+                <div class="card-header mx-auto">
+                  <img
+                    src="${item.title_image}"
+                    style="height: 150px; width: 150px"
+                  />
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title">Kingston</h5>
+                    <p class="card-text">2,900 ฿</p>
+                  </div>
+                  <div>
+                    <p class="card-text text-truncate">16GB 3200MHz</p>
+                  </div>
+                </div>
+                <div class="card-footer d-flex justify-content-evenly">
+                  <button
+                    class="btn btn-success setSpecBtn"
+                    data-product-price="${item.price}"
+                    data-pid="item_3"
+                    data-pcid="cate_3"
+                  >
+                    Set Spec
+                  </button>
+                  <button
+                    class="btn btn-info detailBtn"
+                    data-product-id="${item.product_id}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailProductModal"
+                  >
+                    Detail
+                  </button>
+                </div>
+              </div>
+            </div> -->
+            <!-- item 4 -->
+            <!-- <div class="col">
+              <div class="card">
+                <div class="card-header mx-auto">
+                  <img
+                    src="${item.title_image}"
+                    style="height: 150px; width: 150px"
+                  />
+                </div>
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <h5 class="card-title">AMD</h5>
+                    <p class="card-text">25,900 ฿</p>
+                  </div>
+                  <div>
+                    <p class="card-text text-truncate">Ryzen 9 7590X</p>
+                  </div>
+                </div>
+                <div class="card-footer d-flex justify-content-evenly">
+                  <button
+                    class="btn btn-success setSpecBtn"
+                    data-product-price="${item.price}"
+                    data-pid="item_4"
+                    data-pcid="cate_1"
+                  >
+                    Set Spec
+                  </button>
+                  <button
+                    class="btn btn-info detailBtn"
+                    data-product-id="${item.product_id}"
+                    data-bs-toggle="modal"
+                    data-bs-target="#detailProductModal"
+                  >
+                    Detail
+                  </button>
+                </div>
+              </div>
+            </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -165,7 +330,7 @@
     </div>
   </body>
   <script src="/js/bootstrap.min.js"></script>
+  <script src="/api/userAPI/showProduct.js"></script>
   <script src="/my_js/navbar_script.js"></script>
   <script src="/my_js/setspec_script.js"></script>
-  <script src="/api/userAPI/showProduct.js"></script>
 </html>
